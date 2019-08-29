@@ -1,0 +1,6 @@
+
+
+
+all:
+	gcc ./task1.c -o ./task1.o
+	gcc ./task2.c -o ./task2.o
