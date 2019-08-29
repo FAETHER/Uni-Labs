@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "math.h"
 
 inline size_t fstrlen (const char* s) 
@@ -29,32 +30,57 @@ inline size_t fstrlen (const char* s)
 #   define ASSERT(condition, message) do { } while (0)
 #endif
 
-int main()
+int largeNum(int* arr, int size)
 {
-  char in;
-  scanf (" %c",&in);
-  
-  int arr[2];
-  switch(in)
+  int max = *arr;
+  for (int i = 0; i < size; i++)
     {
-    case 'T':
-      //printf("here\n");
-      for(int i = 0; i<2; i++)
-	{
-	  scanf("%d", &arr[i]);
-	}
-      printf("area of triangle: %f\n", (double) (arr[0]*arr[1]) / 2);
-	break;
-    case 'C':
-	  scanf("%d", &arr[0]);
-	  printf("Area of cicle: %.4lf\n", (double)3.14*(arr[0]*arr[0]));
-	break;
-    case 'S':
-	  scanf("%d", &arr[0]);
-	  printf("Area of square: %d\n", (arr[0]*arr[0]));      
-	break;
-      
+    for (int j = 0; j < size; j++)
+      {
+	printf("%d \n", *((arr+i*size) + j));
+	if(*((arr+i*size) + j) > max)
+	  {
+	    max = *((arr+i*size) + j);
+	  }
+      }
 
     }
+    
+  return max;
+}
 
+void sumcols(int* arr, int size)
+{
+  int sum[size];
+  memset(sum, 0, sizeof(int)*size);
+
+  for (int i = 0; i < size; i++)
+    {
+    for (int j = 0; j < size; j++)
+      {
+        sum[i] += *((arr+i*size) + j);
+      }
+    }
+
+  for(int z = 0; z<size; z++)
+    {
+      printf("Sumcols: %d\n", sum[z]);
+    }
+  return;
+}
+
+int main()
+{
+  int arr[3][3];
+  for(int x = 0; x<3; x++)
+    {
+      for(int y = 0; y<3; y++)
+      {       
+	arr[x][y] = rand() % 10;
+      }
+    }
+
+  printf("Max is: %d\n", largeNum((int*)arr, 3));
+  sumcols((int*) arr, 3);
+  
 }

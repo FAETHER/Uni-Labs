@@ -35,7 +35,6 @@ int GCD(int a, int b)
     {
       a = a/2;
       b = b/2;
-      ret++;
     }
   while(a != b)
     {

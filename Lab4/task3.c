@@ -35,17 +35,22 @@ inline size_t fstrlen (const char* s)
 #   define ASSERT(condition, message) do { } while (0)
 #endif
 
+void Double(int* arr, int size)
+{
+  for(int i = 0; i<size; i++)
+    {
+      arr[i] = arr[i] << 1;
+    }
+}
+
 int main()
 {
-  char p[20];
-  memset(p, 0x20, sizeof(p));
+  int arr[5] = {21, 24, 3, 2, 8};
+  Double(arr, 5);
 
-
-  for(int i = 10; i>0; i--)
+  for(int i = 0; i<5; i++)
     {
-      p[i] = '*';
-      p[15] = 0;
-      printf("%s\n", p);
-      i--;
-    }
+      printf("%d\n", arr[i]);
+    }	 
+  
 }

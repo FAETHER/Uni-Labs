@@ -1,13 +1,7 @@
 // Example program
 
-
-
-//Lab 1 was read 10 strings from a test file and print them out.
-
-
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "math.h"
 
 inline size_t fstrlen (const char* s) 
@@ -35,14 +29,36 @@ inline size_t fstrlen (const char* s)
 #   define ASSERT(condition, message) do { } while (0)
 #endif
 
+int GCD(int a, int b)
+{
+  while (a % 2 == 0 && b % 2 == 0)
+    {
+      a = a/2;
+      b = b/2;
+    }
+  while(a != b)
+    {
+      if(a % 2 == 0)
+	{
+	  a = a/2;
+	}
+      else if(b % 2 == 0)
+	{
+	  b = b/2;
+	}
+      else if(a > b)
+	{
+	  a = (a-b)/2;
+	}
+      else
+	{
+	  b = (b-a)/2;
+	}
+    }
+  return a;
+}
+
 int main()
 {
-int a = 2;
- int b = 2;
- int x = a++;
- int y = ++b;
- printf("a = %d\n", a);
- printf("b = %d\n", b);
- printf("x = %d\n", x);
- printf("y = %d\n", y);  
+  printf("%d\n", GCD(10, 25));
 }
