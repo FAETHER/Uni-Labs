@@ -50,12 +50,32 @@ int to_decimal(char my_binary[])
   return result;
 }
 
+int to_decimal_rec(char* start, char my_binary[], int result)
+{
+  if(*(my_binary+1) != '\0')
+    {
+      if(!(*my_binary - '0'))
+	{
+	  return to_decimal_rec(start, my_binary+1, result);
+	}
+      else
+	{
+	  result = pow(2, my_binary-start) + result;	  
+	  return to_decimal_rec(start, my_binary+1, result);
+	}
+    }
+  else
+    {
+      return result;
+    }
+}
+
 int main()
 {
   char buf[200];
   fgets(buf, 200, stdin);
 
-  printf("%d\n", to_decimal(buf));
+  printf("Result: %d\n", to_decimal_rec(&buf[0], buf, 0));
 
   
 }
