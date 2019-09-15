@@ -63,11 +63,11 @@ void scan_exam_data() //this call is pointless, but I am following the direction
 
   while(fgets(str, 100, stdin))
     {
-      puts(str);
+      //      puts(str);
       len = fstrlen(str);
       
       if(!global.line) //shortcut for exceptional 1st line
-	{	  
+	{
 	  global.answers = (char*) malloc(len+1); //in production applications, one should avoid using malloc very often.
 	  ASSERT(global.answers, "Out of system memory!");
 	  for(i = 0; i<len && str[i] != ' '; i++) //until we reach space separator. Assumed to exist.
@@ -76,6 +76,7 @@ void scan_exam_data() //this call is pointless, but I am following the direction
 	      *((char*)&global.num) = str[i] - '0'; //convert ascii to num
 	      //assume that the count is the 1st char + next. This will limit us to max of 0x0000FFFF.
 	    }
+	  ASSERT(str[i] == ' ', "Error, bad expression, make sure 1st line is in ~ 5 abcd... ~ format.");
 	  memcpy(global.answers, str+i+1, len-i);
 	}
       else 
@@ -85,6 +86,11 @@ void scan_exam_data() //this call is pointless, but I am following the direction
 	      *((char*)&global.ids[id_index + i]) = str[i]; //just copy ids only. tokenize a bit
 	      if(str[i] == ' ')
 		{
+		  int c = (len-i-1) - global.num;
+		  if(c != 1 && (c<0 || c>0))
+		    {
+		      ASSERT(0, "Err, answers provided must be in range of answer sheet!");
+		    }
 		  memcpy(&global.ans[(global.line-1) * global.num], &str[i+1], len-i-1);
 		  break;
 		}
@@ -135,6 +141,7 @@ void print_data()
 {
   puts("Exam Report\n");
   int i;
+  printf("Students: %d\n", global.line-1);
   printf("Question");
   for(i = 1; i<=global.num; i++)
     {
@@ -177,10 +184,10 @@ int main()
 {
 
   scan_exam_data();
-  printf("num: %d\n", global.num);
-  printf("answers: %s\n", global.answers);
-  printf("%s\n", global.ids);
-  printf("%s\n", global.ans);
+  //printf("num: %d\n", global.num);
+  //printf("answers: %s\n", global.answers);
+  //printf("%s\n", global.ids);
+  //printf("%s\n", global.ans);
 
   analyze_data();
 
