@@ -1,11 +1,6 @@
 // Example program
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include <string.h>
-#include "math.h"
-#include <setjmp.h>
+#include "header.h"
 
 inline size_t fstrlen (const char* s) 
 {
@@ -32,12 +27,25 @@ inline size_t fstrlen (const char* s)
 #   define ASSERT(condition, message) do { } while (0)
 #endif
 
-int main()
-{
-  char* abc = "heLLo\n';
-  for(int i = 0; i<fstrlen(abc); i++)
-{
 
-}
+int main() 
+{
+  srand(time(0));
+  
+  int len = rand() % 20 + 1;
+  int arr[len];
+  for(int i = 0; i<len; i++)
+    {
+      arr[i] = rand() % 30 + 1;
+      printf("org %d\n", arr[i]);
+    }
 
-}
+  int* arrr = Double(arr, len);
+
+  for(int i = 0; i<len; i++)
+    {
+      printf("post: %d\n", arrr[i]);
+    }  
+  
+  return 0; 
+} 

@@ -6,6 +6,9 @@
 #include <string.h>
 #include "math.h"
 #include <setjmp.h>
+#include "time.h"
+
+#include "header.h"
 
 inline size_t fstrlen (const char* s) 
 {
@@ -32,36 +35,20 @@ inline size_t fstrlen (const char* s)
 #   define ASSERT(condition, message) do { } while (0)
 #endif
 
-typedef struct a
+
+int main() 
 {
-  char name[20+1];
-  char brand[50+1];
-  int units;
-  double price;
-}a;
-
-void inc(a* p)
-{
-  p->units *= 2;
-  p->price = (p->price * 20) / 100;
-  return;
-}
-
-int main()
-{
-  struct a abc;
-  fgets(abc.name, 20, stdin);
-  fgets(abc.brand, 50, stdin);
-
-  scanf("%d", &abc.units);
-  scanf("%lf", &abc.price);
-
-  inc(&abc);
+  srand(time(0));
   
-  printf("%s\n", abc.name);
-  printf("%s\n", abc.brand);
-  printf("%d\n", abc.units);
-  printf("%lf\n", abc.price);
-  
+  int len = rand() % 20 + 1;
+  int arr[len];
+  for(int i = 0; i<len; i++)
+    {
+      arr[i] = rand() % 30 + 1;
+    }
 
-}
+  printf("%d\n", max(arr, len));
+  printf("%d\n", min(arr, len));
+  
+  return 0; 
+} 
