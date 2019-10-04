@@ -1,4 +1,5 @@
 // Example program
+
 #include "header.h"
 
 inline size_t fstrlen (const char* s) 
@@ -26,20 +27,33 @@ inline size_t fstrlen (const char* s)
 #   define ASSERT(condition, message) do { } while (0)
 #endif
 
+uint32_t count_trail_z(int in)
+{
+  int count = 0;
+  char op;
+  for(int i = 0; i<sizeof(int); i++)
+    {
+      char byte = *((char*)&in+i);
+      while(byte)
+	{
+	  op = byte;
+	  byte >>=1;
+	  if((byte << 1) == op)
+	    {
+	      count++;
+	    }
+	  else
+	    {
+	      break;
+	    }
+	}
+    }
+  return count;
+}
 
 int main() 
 {
-  srand(time(0));
-  
-  int len = rand() % 20 + 1;
-  int arr[len];
-  for(int i = 0; i<len; i++)
-    {
-      arr[i] = rand() % 30 + 1;
-    }
-
-  printf("%d\n", max(arr, len));
-  printf("%d\n", min(arr, len));
-  
+  printf("%d\n", count_trail_z(12));
+  printf("%d\n", count_trail_z(71));
   return 0; 
 } 

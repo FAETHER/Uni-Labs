@@ -26,20 +26,31 @@ inline size_t fstrlen (const char* s)
 #   define ASSERT(condition, message) do { } while (0)
 #endif
 
+void swap_chars(char* in)
+{
+  while(*in)
+    {
+      if(*in < 'a')
+	{
+	  *in |= 32;
+	}
+      else
+	{
+	  *in ^= 32;
+	}
+      in++;
+    }
+  *(in-1) = '\0';
+}
 
 int main() 
 {
-  srand(time(0));
-  
-  int len = rand() % 20 + 1;
-  int arr[len];
-  for(int i = 0; i<len; i++)
-    {
-      arr[i] = rand() % 30 + 1;
-    }
 
-  printf("%d\n", max(arr, len));
-  printf("%d\n", min(arr, len));
+  char t[] = "BHBgjjhg\n";
+
+  swap_chars(t);
+
+  printf("%s\n", t);
   
   return 0; 
 } 
