@@ -172,8 +172,8 @@ int main()
   printf("Number:");  
   scanf("%d", &n);
   
-  //make_events(f, 2);
-  EVENT* ptr = make_events("events.txt", n);
+  EVENT* ptr = make_events(f, n);
+  //EVENT* ptr = make_events("events.txt", n);
   printf("Schedule of Events:\n");
   for(int i = 0; i<n; i++)
     {
