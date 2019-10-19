@@ -1,0 +1,16 @@
+8 15
+lab18 c 631
+input txt 211
+address c 1289
+Capture png 4340
+Capture2 png 6321
+notes docx 16853
+index html 2309
+CLion exe 4096
+example java 2905
+recording mp3 2564391
+Firefox exe 4096
+chap_12 pptx 2132423
+functions h 145
+a out 1024
+Assignment_2 pdf 81348
