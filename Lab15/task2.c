@@ -52,42 +52,52 @@ int main()
   char weird_skip = 1;
   int next = 0;
 
-  file_t** ss;
+  file_t* p;
+  int nn = 98067;
+  file_t* ps;
   
   while(fgets(str, 100, stdin) && (line) != n)
     {
       if(weird_skip)
 	{
 	  weird_skip = 0;
-	  n = atoi(&str[2]);
-	  ss = (file_t**) calloc(n, sizeof(file_t*)); //allocate the bi* on stack
-	  //ss = s;
+	  n = atoi(&str[0]);
+	  nn = atoi(&str[2]);	  
+	  p = (file_t*) calloc(n, sizeof(file_t)); //allocate the bi* on stack
+	  ps = p;
 	  continue;
 	}
-	
+
+      if(line == (n-1) && n != nn)
+	{
+	  int dif = ps - p;
+	  p = (file_t*) realloc(ps, nn*sizeof(file_t));
+	  for(int i = 0; i<line; i++)
+	    {
+	      p ++;
+	    }
+	  //ps = p;
+	  n = nn;
+	}
+            
       len = fstrlen(str);
-
-      file_t* p = (file_t*) calloc(1, sizeof(file_t)); //allocate in a loop because I do not care.
-
       next = sstrlen(str);
       memcpy(p->name, str, next);
       memcpy(p->extension, &str[next+1], sstrlen(&str[next+1]));
       next += sstrlen(&str[next+1]);
       p->file_size = atoi(&str[next+1]);
-      ss[line] = p;
-      //printf("%s\n", &str[next]);
-      
+      p++;
       line++;
     }
 
-  for(int i = 0; i<n; i++)
+  for(int i = 0; i<nn; i++)
     {
       //printf("%p\n", ss[i]);
-      printf("%s.%s, %d bytes\n", ss[i]->name, ss[i]->extension, ss[i]->file_size);
-      free(ss[i]);
+      printf("%s.%s, %d bytes\n", ps[i].name, ps[i].extension, ps[i].file_size);
+      //free(ss[i]);
     }
 
-  free(ss);
+  /* free(ss); */
   
   
   return 0; 
