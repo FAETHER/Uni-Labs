@@ -64,42 +64,49 @@ void p_range(node_t* head, int start, int end)
   ASSERT(end < LEN, "end bigger than len");
   ASSERT(start < end, "start > end");
 
-  start--;
-  head = (head + start);
-  node_t* end_ = (head + end);
- for(; head->next != NULL && head != end_; head++)
+  int c = 0;
+ for(; head->next != NULL && head != NULL; head = head->next)
     {
-      printf("range :%c\n", head->c);      
+      if(c >= start && c <= end)
+	{
+	  printf("range :%c\n", head->c);
+	}
+      c++;
     }
 }
 
 void free_l(node_t** p)
 {
-  /* node_t* head = *p; */
-  /* for(; head->next != NULL; head++) */
-  /*   { */
-  /*     head->c = 0; */
-      
-  /*   } */
-  memset(*p, 0, LEN*sizeof(node_t));
+  node_t* head = *p;
+  for(; head->next != NULL && head != NULL;)
+    {
+      node_t* _head = head;
+      head = head->next;
+      free(_head);
+    }  
   *p = NULL;
 }
 
 int main() 
 {
-  node_t* head = (node_t*) calloc(LEN, sizeof(node_t));
+  node_t* head = (node_t*) calloc(1, sizeof(node_t));
 
   node_t* org = head;
   head->c = 'A';
-  head->next = (org+1);
+  head->next = (node_t*) calloc(1, sizeof(node_t));
+  head = head->next;
   head->c = 'B';
-  head->next = ++head;
+  head->next = (node_t*) calloc(1, sizeof(node_t));
+  head = head->next;  
   head->c = 'C';
-  head->next = ++head;
+  head->next = (node_t*) calloc(1, sizeof(node_t));
+  head = head->next;
   head->c = 'D';
-  head->next = ++head;
+  head->next = (node_t*) calloc(1, sizeof(node_t));
+  head = head->next;
   head->c = 'E';
-  head->next = ++head;
+  head->next = (node_t*) calloc(1, sizeof(node_t));
+  head = head->next;
 
   search_node(org, 'B');
 
