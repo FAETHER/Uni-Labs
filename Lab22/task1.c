@@ -9,11 +9,25 @@ struct Node
     struct Node *next;
     struct Node *prev;
 }; 
-    
+
+struct Node* tail;
+
 /* Function to insert a node at the beginning of a linked list */
 void insertAtTheBegin(struct Node **start_ref, int data) 
-{ 
-    struct Node *ptr1 = (struct Node*)malloc(sizeof(struct Node)); 
+{
+    struct Node *ptr1 = (struct Node*)malloc(sizeof(struct Node));
+    static char once = 1;
+    if(once)
+      {
+	tail = ptr1;
+	once = 0;
+      }
+    ptr1->prev = NULL;  
+  
+    if ((*start_ref) != NULL)  
+      (*start_ref)->prev = ptr1;  
+  
+
     ptr1->data = data; 
     ptr1->next = *start_ref; 
     *start_ref = ptr1; 
@@ -30,7 +44,15 @@ void printList(struct Node *start)
         temp = temp->next; 
     } 
 } 
-  
+
+/* function to swap data of two nodes a and b*/
+void swap(struct Node *a, struct Node *b) 
+{ 
+    int temp = a->data; 
+    a->data = b->data; 
+    b->data = temp; 
+}
+
 /* Bubble sort the given linked list */
 void bubbleSort(struct Node *start) 
 { 
@@ -61,39 +83,53 @@ void bubbleSort(struct Node *start)
     while (swapped); 
 } 
   
-/* function to swap data of two nodes a and b*/
-void swap(struct Node *a, struct Node *b) 
-{ 
-    int temp = a->data; 
-    a->data = b->data; 
-    b->data = temp; 
+void delet_last()
+{
+  struct Node* tmp = tail->prev;
+  tail->prev->next = NULL;
+  free(tail);
+  tail = tmp;
 }
 
-void push(Node** head_ref, int new_data)  
-{  
-    /* 1. allocate node */
-    Node* new_node = (Node*) calloc(1, sizeof(Node));  
-  
-    /* 2. put in the data */
-    new_node->data = new_data;  
-  
-    /* 3. Make next of new node as head and previous as NULL */
-    new_node->next = (*head_ref);  
-    new_node->prev = NULL;  
-  
-    /* 4. change prev of head node to new node */
-    if ((*head_ref) != NULL)  
-        (*head_ref)->prev = new_node;  
-  
-    /* 5. move the head to point to the new node */
-    (*head_ref) = new_node;  
-}
+int insert_node(struct Node** head, int new_item, int index)
+{
+  struct Node* org = *head;
+  struct Node* prev;
+  int i;
+    for(i = 0; *head != NULL && i<index; i++)
+      {
+	if(i == index-1)
+	  {
+	    prev = *head;
+	  }
+	*head = (*head)->next;
+      }
+    prev->next = (struct Node*) calloc(1, sizeof(struct Node));
+    prev->next->data = new_item;
+    prev->next->next = *head;
 
-void pop(Node** head_ref, int new_data)  
-{  
+    //    printf("%d %d\n", i, index);
+    //ASSERT(i == index, "err, index != i");
+
+    *head = org;
     
-} 
+    return 1;
+}
 
+
+void add_mid(int a, struct Node **start_ref)
+{
+  struct Node *temp = *start_ref;
+  int i = 0;
+  while (temp!=NULL) 
+    {
+      i++;
+      temp = temp->next; 
+    }
+
+  i = i/2;
+  insert_node(start_ref, a, i);
+}
 
 int main() 
 {  
@@ -105,6 +141,7 @@ int main()
     while(fgets(str, 100, stdin))
       {	
 	insertAtTheBegin(&start, atoi(&str[0]));
+	//push(&start, atoi(&str[i]));
 	i++;
 	if(i>2)
 	  {
@@ -116,7 +153,11 @@ int main()
 	    break;
 	  }
       }
+    //delet_last();
+    //printList(start);
 
+    add_mid(20, &start);
+    printList(start);
     
     getchar(); 
     return 0; 
