@@ -143,12 +143,12 @@ int main()
 	insertAtTheBegin(&start, atoi(&str[0]));
 	//push(&start, atoi(&str[i]));
 	i++;
-	if(i>2)
+	if(i>5)
 	  {
 	    bubbleSort(start);
 	    printList(start);
 	  }
-	if(i == 4)
+	if(i == 10)
 	  {
 	    break;
 	  }
